@@ -12,7 +12,9 @@
 	<artifactId>Thankful-aws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Thankful-aws</name>
-	<description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
+
+    <description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>

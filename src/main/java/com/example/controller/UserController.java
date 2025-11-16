@@ -1,11 +1,11 @@
-package com.example.Thankful_aws;
+package com.example.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/user")
 @RestController
 public class UserController {
-    @RequestMapping("getname")
 
     public String getName(){
         return "Mayank";
