@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.11'
+    }
+
     environment {
         AWS_REGION = "ap-south-1"
         ECR_REPO = "123456789012.dkr.ecr.ap-south-1.amazonaws.com/myapp"
@@ -16,7 +20,7 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat "${tool 'Maven 3.9.11'}\\bin\\mvn clean package -DskipTests'
             }
         }
 
