@@ -20,7 +20,7 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                bat "${tool 'Maven 3.9.11'}\\bin\\mvn clean package -DskipTests'
+                bat "${tool 'Maven 3.9.11'}\\bin\\mvn clean package -DskipTests"
             }
         }
 
