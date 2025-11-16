@@ -16,26 +16,26 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t Thankful-aws .'
+                bat 'docker build -t Thankful-aws .'
             }
         }
 
         stage('Login to ECR') {
             steps {
-                sh 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO'
+                bat 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO'
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker tag Thankful-aws:latest $ECR_REPO:$IMAGE_TAG'
-                sh 'docker push $ECR_REPO:$IMAGE_TAG'
+                bat 'docker tag Thankful-aws:latest $ECR_REPO:$IMAGE_TAG'
+                bat 'docker push $ECR_REPO:$IMAGE_TAG'
             }
         }
     }
