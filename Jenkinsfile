@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'linux' }
 
     tools {
         maven 'Maven 3.9.11'
@@ -20,26 +20,29 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                bat "${tool 'Maven 3.9.11'}\\bin\\mvn clean package -DskipTests"
+                sh "${tool 'Maven 3.9.11'}/bin/mvn clean package -DskipTests"
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t Thankful-aws .'
+                sh 'docker build -t thankful-aws .'
             }
         }
 
         stage('Login to ECR') {
             steps {
-                bat 'aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %ECR_REPO%'
+                sh """
+                aws ecr get-login-password --region $AWS_REGION \
+                | docker login --username AWS --password-stdin $ECR_REPO
+                """
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker tag Thankful-aws:latest %ECR_REPO%:%IMAGE_TAG%'
-                bat 'docker push %ECR_REPO%:%IMAGE_TAG%'
+                sh "docker tag thankful-aws:latest $ECR_REPO:$IMAGE_TAG"
+                sh "docker push $ECR_REPO:$IMAGE_TAG"
             }
         }
     }
